@@ -1,0 +1,81 @@
+{
+	"id": "com.sap.sample.googleGauge",
+	"version": "1.0.0",
+	"name": "Google Gauge Box",
+	"description": "A Google Gauge box",
+	"newInstancePrefix": "googleGauge",
+	"icon": "https://torbenhe1997.github.io/customwidget/googleGauge.png",
+	"vendor": "SAP",
+	"eula": "",
+	"license": "",
+    "webcomponents": [
+		{
+			"kind": "main",
+			"tag": "com-demo-gauge",
+			"url": "https://torbenhe1997.github.io/customwidget/box.js",
+			"integrity": "",
+			"ignoreIntegrity": true
+		}
+    
+	],
+    "properties": {
+		"value": {
+			"type": "number",
+			"description": "value",
+			"default": 0
+		},
+        "info": {
+			"type": "string",
+			"description": "Gauge info",
+			"default":""
+		},
+        "color": {
+			"type": "string",
+			"description": "Text Color Info",
+			"default": "#3498db"
+		},
+        "width": {
+			"type": "integer",
+			"default": 100
+		},
+        "height": {
+			"type": "integer",
+			"default": 100
+		}
+	},
+    "methods": {
+		"setValue": {
+			"description": "Sets the gauge value.",
+			"parameters": [
+				{
+					"name": "newValue",
+					"type": "number",
+					"description": "New value."
+				},
+                {
+					"name": "newInfo",
+					"type": "string",
+					"description": "New Info."
+				},
+                {
+					"name": "newColor",
+					"type": "string",
+					"description": "New Color."
+				}
+			],
+			"body": "this.value = newValue; this.info = newInfo, this.color = newColor"
+		},
+		"getValue": {
+			"returnType": "number",
+			"description": "Returns the gauge value",
+			"body": "return this.value;"
+		}
+
+
+    },
+    "events": {
+        "onClick":{
+            "description":"Called when the user clicks the box"
+        }
+    }
+}
