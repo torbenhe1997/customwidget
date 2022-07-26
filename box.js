@@ -354,49 +354,30 @@
 		}
 
 		onCustomWidgetBeforeUpdate(changedProperties) {
-			this._props = { ...this._props, ...changedProperties };
+			
 
 		}
 
 		onCustomWidgetAfterUpdate(changedProperties) {
-			console.log("onCustomWidgetAfterUpdate")
-			console.log("this._props prop = ", this._props);
-			this._props = { ...this._props, ...changedProperties };
-
-			var ctx = this.shadowRoot.getElementById('chart_div');
-
-			var myProps = this._props
 			
-			google.charts.load('current', {'packages':['gauge']});
-			google.charts.setOnLoadCallback(function() {
-				drawChart(myProps);
-			});
-			console.log("changedProperties = ", changedProperties);
+			function drawTable() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Name');
+        data.addColumn('number', 'Salary');
+        data.addColumn('boolean', 'Full Time Employee');
+        data.addRows([
+          ['Mike',  {v: 10000, f: '$10,000'}, true],
+          ['Jim',   {v:8000,   f: '$8,000'},  false],
+          ['Alice', {v: 12500, f: '$12,500'}, true],
+          ['Bob',   {v: 7000,  f: '$7,000'},  true]
+        ]);
 
-			function drawChart(props) {
-				console.log("props =", props)
-				var data = google.visualization.arrayToDataTable([
-				['Label', 'Value'],
-				[props.label, props.value]
-				]);
+        var table = new google.visualization.Table(document.getElementById('table_div'));
 
-				var options = {
-				chartArea: {
-					// leave room for y-axis labels
-					width: '94%'
-					},
-					legend: {
-					position: 'top'
-					},
-					width: '100%',
-				redFrom: props.redFrom, redTo: props.redTo,
-				yellowFrom:props.yellowFrom, yellowTo: props.yellowTo,
-				minorTicks: 5
-				};
-
-				var chart = new google.visualization.Gauge(ctx);
-
-				chart.draw(data, options);
+        table.draw(data, {showRowNumber: true, width: '100%', height: '100%'});
+      }
+			
+			
 			}
 		}
 	}
