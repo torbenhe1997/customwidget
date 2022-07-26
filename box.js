@@ -354,46 +354,49 @@
 		}
 
 		onCustomWidgetBeforeUpdate(changedProperties) {
-			
+			this._props = { ...this._props, ...changedProperties };
 
 		}
 
 		onCustomWidgetAfterUpdate(changedProperties) {
-			    var data = google.visualization.arrayToDataTable([
-          ['Label', 'Value'],
-          ['Memory', 80],
-          ['CPU', 55],
-          ['Network', 68]
-        ]);
+			console.log("onCustomWidgetAfterUpdate")
+			console.log("this._props prop = ", this._props);
+			this._props = { ...this._props, ...changedProperties };
 
-        var options = {
-          width: 400, height: 120,
-          redFrom: 90, redTo: 100,
-          yellowFrom:75, yellowTo: 90,
-          minorTicks: 5
-        };
+			var ctx = this.shadowRoot.getElementById('chart_div');
 
-        var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
-
-        chart.draw(data, options);
-
-        setInterval(function() {
-          data.setValue(0, 1, 40 + Math.round(60 * Math.random()));
-          chart.draw(data, options);
-        }, 13000);
-        setInterval(function() {
-          data.setValue(1, 1, 40 + Math.round(60 * Math.random()));
-          chart.draw(data, options);
-        }, 5000);
-        setInterval(function() {
-          data.setValue(2, 1, 60 + Math.round(20 * Math.random()));
-          chart.draw(data, options);
-        }, 26000);
-      }
-		
-      }
+			var myProps = this._props
 			
-			
+			google.charts.load('current', {'packages':['gauge']});
+			google.charts.setOnLoadCallback(function() {
+				drawChart(myProps);
+			});
+			console.log("changedProperties = ", changedProperties);
+
+			function drawChart(props) {
+				console.log("props =", props)
+				var data = google.visualization.arrayToDataTable([
+				['Label', 'Value'],
+				[props.label, props.value]
+				]);
+
+				var options = {
+				chartArea: {
+					// leave room for y-axis labels
+					width: '94%'
+					},
+					legend: {
+					position: 'top'
+					},
+					width: '100%',
+				redFrom: props.redFrom, redTo: props.redTo,
+				yellowFrom:props.yellowFrom, yellowTo: props.yellowTo,
+				minorTicks: 5
+				};
+
+				var chart = new google.visualization.Gauge(ctx);
+
+				chart.draw(data, options);
 			}
 		}
 	}
