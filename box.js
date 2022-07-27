@@ -8336,40 +8336,7 @@
      
       var ctx = this.shadowRoot.getElementById('chart_div');
       google.charts.load('current', { packages: ['gauge'] });
-       google.charts.setOnLoadCallback(function () {
-                drawChart();
-            });
-
-      function drawChart() {
-      
-        var data = google.visualization.arrayToDataTable([
-          ['Label', 'Value'],
-          ['Memory', 80],
-          ['CPU', 55],
-          ['Network', 68],
-        ]);
-
-       var options = {
-                    chartArea: {
-                        // leave room for y-axis labels
-                        width: '94%'
-                    },
-                    legend: {
-                        position: 'top'
-                    },
-                    width: '100%',
-          redFrom: 90,
-          redTo: 100,
-          yellowFrom: 75,
-          yellowTo: 90,
-          minorTicks: 5,
-        }
-
-
-        
-        var chart = new google.visualization.Gauge(ctx);
-         chart.draw(data, options);
-      }
+     
 
      
     }
